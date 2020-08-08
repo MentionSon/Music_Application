@@ -10,6 +10,8 @@ import PropTypes from "prop-types";
 import BetterScroll from "better-scroll";
 import styled from "styled-components";
 import { debounce } from "../../api/utils";
+import Loading from "../Loading";
+import Loading2 from "../LoadingV2";
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -81,6 +83,10 @@ const Scroll = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
+    console.log(pullUpLoading);
+  }, [pullUpLoading]);
+
+  useEffect(() => {
     if (!betterScroll || !onScroll) {
       return;
     }
@@ -150,10 +156,12 @@ const Scroll = forwardRef((props, ref) => {
     <ScrollContainer ref={scrollContainerRef}>
       {props.children}
       {/* 滑到底部加载动画 */}
-      <PullUpLoading style={PullUpdisplayStyle}>loading ...</PullUpLoading>
+      <PullUpLoading style={PullUpdisplayStyle}>
+        <Loading></Loading>
+      </PullUpLoading>
       {/* 顶部下拉刷新动画 */}
       <PullDownLoading style={PullDowndisplayStyle}>
-        loading ...
+        <Loading2></Loading2>
       </PullDownLoading>
     </ScrollContainer>
   );
