@@ -83,10 +83,6 @@ const Scroll = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
-    console.log(pullUpLoading);
-  }, [pullUpLoading]);
-
-  useEffect(() => {
     if (!betterScroll || !onScroll) {
       return;
     }

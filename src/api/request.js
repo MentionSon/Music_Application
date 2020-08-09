@@ -12,6 +12,12 @@ export const getHotSingerListRequest = (count) => {
   return axiosInstance.get(`/top/artists?offset=${count}`);
 };
 
-export const getSingerListRequest = () => {
-  return axiosInstance.get(`/artist/list?type=1&area=96&initial=b&`);
+export const getSingerListRequest = (type, area, inital, pageCount) => {
+  return axiosInstance.get(
+    `/artist/list?type=${type}&area=${area}&initial=${inital}&offset=${pageCount}`
+  );
+};
+
+export const getRankListRequest = () => {
+  return axiosInstance.get("/toplist/detail");
 };

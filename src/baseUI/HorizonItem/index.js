@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Scroll from "../Scroll";
 import { PropTypes } from "prop-types";
@@ -32,6 +32,7 @@ const ListItem = styled.span`
 `;
 
 const Horizon = (props) => {
+  const { horizonType } = props;
   const { list, oldVal, title } = props;
   const { handleClick } = props;
 
@@ -52,15 +53,31 @@ const Horizon = (props) => {
       <div ref={Category}>
         <List>
           <span>{title}</span>
-          {list.map((item) => (
-            <ListItem
-              className={`${oldVal === item.key ? "selected" : ""}`}
-              key={item.key}
-              onClick={() => handleClick(item.key)}
-            >
-              {item.name}
-            </ListItem>
-          ))}
+          {horizonType === "area"
+            ? list.map((item) => (
+                <ListItem
+                  className={`${
+                    oldVal.type === item.type && oldVal.area === item.area
+                      ? "selected"
+                      : ""
+                  }`}
+                  key={item.key}
+                  onClick={() =>
+                    handleClick({ type: item.type, area: item.area })
+                  }
+                >
+                  {item.name}
+                </ListItem>
+              ))
+            : list.map((item) => (
+                <ListItem
+                  className={`${oldVal === item.type ? "selected" : ""}`}
+                  key={item.type}
+                  onClick={() => handleClick(item.type)}
+                >
+                  {item.name}
+                </ListItem>
+              ))}
         </List>
       </div>
     </Scroll>
@@ -69,14 +86,14 @@ const Horizon = (props) => {
 
 Horizon.defaultProps = {
   list: [],
-  oldVal: "",
+  oldVal: { type: "", area: "" },
   title: "",
   handleClick: null,
 };
 
 Horizon.propTypes = {
   list: PropTypes.array,
-  oldVal: PropTypes.string,
+  oldVal: PropTypes.any,
   title: PropTypes.string,
   handleClick: PropTypes.func,
 };

@@ -4,18 +4,8 @@ import { categoryTypes, alphaTypes } from "../../api/config";
 import { NavContainer, ListContainer, ListItem, List } from "./style";
 import Scroll from "../../baseUI/Scroll";
 import { useHotSingerList } from "./store/model";
-import { useSelector } from "react-redux";
 
 const renderSingerList = (singerList) => {
-  // const singerList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => {
-  //   return {
-  //     picUrl:
-  //       "https://p2.music.126.net/uTwOm8AEFFX_BYHvfvFcmQ==/109951164232057952.jpg",
-  //     name: "Roll",
-  //     accountId: 277313426,
-  //   };
-  // });
-
   return (
     <List>
       {singerList.map((item, index) => (
@@ -36,14 +26,26 @@ const renderSingerList = (singerList) => {
 };
 
 const Singer = () => {
-  const [category, setCategory] = useState("");
+  const [hot, setHot] = useState("hotSingers");
+  const [category, setCategory] = useState({
+    type: "",
+    area: "-1",
+  });
   const [alpha, setAlpha] = useState("");
 
   const handleUpdateCategory = (val) => {
+    if (hot) {
+      setHot(false);
+    }
+    changePage(0);
     setCategory(val);
   };
 
   const handleUpdateAlpha = (val) => {
+    if (hot) {
+      setHot(false);
+    }
+    changePage(0);
     setAlpha(val);
   };
 
@@ -54,19 +56,24 @@ const Singer = () => {
   const {
     singerList,
     pullUpLoading,
+    pullDownLoading,
+    changePage,
     pullUpRefreshDispatch,
-  } = useHotSingerList();
+    pullDownRefreshDishpatch,
+  } = useHotSingerList(hot, category, alpha);
 
   return (
     <div>
       <NavContainer>
         <Horizon
+          horizonType={"area"}
           list={categoryTypes}
           title={"Category(Default Hot):"}
           oldVal={category}
           handleClick={(val) => handleUpdateCategory(val)}
         ></Horizon>
         <Horizon
+          horizonType={"alpha"}
           list={alphaTypes}
           title={"First Letter"}
           oldVal={alpha}
@@ -74,7 +81,12 @@ const Singer = () => {
         ></Horizon>
       </NavContainer>
       <ListContainer>
-        <Scroll pullUpLoading={pullUpLoading} pullUp={pullUpRefreshDispatch}>
+        <Scroll
+          pullUpLoading={pullUpLoading}
+          pullUp={pullUpRefreshDispatch}
+          pullDownLoading={pullDownLoading}
+          pullDown={pullDownRefreshDishpatch}
+        >
           {renderSingerList(singerList)}
         </Scroll>
       </ListContainer>
