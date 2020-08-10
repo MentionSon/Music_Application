@@ -16,6 +16,10 @@ const Rank = (props) => {
 
   const globalList = rankList.slice(globalStartIndex);
 
+  const enterDetail = (detail) => {
+    props.history.push(`/rank/${detail.id}`);
+  };
+
   const renderSongList = (list) => {
     return list.length ? (
       <SongList>
@@ -34,7 +38,11 @@ const Rank = (props) => {
       <List globalRank={global}>
         {list.map((item, index) => {
           return (
-            <ListItem key={`${item.coverImgId}${index}`} tracks={item.tracks}>
+            <ListItem
+              key={`${item.coverImgId}${index}`}
+              tracks={item.tracks}
+              onClick={() => enterDetail(item)}
+            >
               <div className="img_wrapper">
                 <img src={item.coverImgUrl} alt="" />
                 <div className="decorate"></div>

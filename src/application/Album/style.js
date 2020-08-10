@@ -38,13 +38,13 @@ export const TopDesc = styled.div`
   position: relative;
   .background {
     z-index: -1;
-    background: url (${(props) => props.background}) no-repeat;
+    background: url(${(props) => props.background}) no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
     position: absolute;
     width: 100%;
     height: 100%;
-    filter: blur (20px);
+    filter: blur(20px);
     .filter {
       position: absolute;
       z-index: 10;
@@ -52,7 +52,7 @@ export const TopDesc = styled.div`
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba (7, 17, 27, 0.2);
+      background: rgba(7, 17, 27, 0.2);
     }
   }
   .img_wrapper {
@@ -65,8 +65,10 @@ export const TopDesc = styled.div`
       width: 100%;
       height: 35px;
       border-radius: 3px;
-      background: linear-gradient
-        (hsla (0, 0%, 43%, 0.4), hsla (0, 0%, 100%, 0));
+      background: linear-gradient(
+        hsla (0, 0%, 43%, 0.4),
+        hsla (0, 0%, 100%, 0)
+      );
     }
     .play_count {
       position: absolute;
@@ -136,7 +138,7 @@ export const Menu = styled.div`
     color: ${style["font-color-light"]};
     z-index: 1000;
     font-weight: 500;
-    .iconfont {
+    > span {
       font-size: 20px;
     }
   }
@@ -148,7 +150,7 @@ export const SongList = styled.div`
   ${(props) =>
     props.showBackground
       ? `background: ${style["highlight-background-color"]}`
-      : ""}
+      : ""};
   .first_line {
     box-sizing: border-box;
     padding: 10px 0;
@@ -160,7 +162,7 @@ export const SongList = styled.div`
       display: inline-block;
       line-height: 24px;
       color: ${style["font-color-desc"]};
-      .iconfont {
+      .i {
         font-size: 24px;
         margin-right: 10px;
         vertical-align: top;
@@ -188,7 +190,7 @@ export const SongList = styled.div`
       font-size: 0;
       border-radius: 3px;
       vertical-align: top;
-      .iconfont {
+      i {
         vertical-align: top;
         font-size: 10px;
         margin: 0 5px 0 10px;

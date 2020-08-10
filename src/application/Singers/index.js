@@ -4,28 +4,9 @@ import { categoryTypes, alphaTypes } from "../../api/config";
 import { NavContainer, ListContainer, ListItem, List } from "./style";
 import Scroll from "../../baseUI/Scroll";
 import { useHotSingerList } from "./store/model";
+import { renderRoutes } from "react-router-config";
 
-const renderSingerList = (singerList) => {
-  return (
-    <List>
-      {singerList.map((item, index) => (
-        <ListItem key={`${item.accountId}-${index}`}>
-          <div className="img_wrapper">
-            <img
-              src={`${item.picUrl}?param=300x300`}
-              width="100%"
-              height="100%"
-              alt="music"
-            />
-          </div>
-          <span className="name">{item.name}</span>
-        </ListItem>
-      ))}
-    </List>
-  );
-};
-
-const Singer = () => {
+const Singer = (props) => {
   const [hot, setHot] = useState("hotSingers");
   const [category, setCategory] = useState({
     type: "",
@@ -49,10 +30,6 @@ const Singer = () => {
     setAlpha(val);
   };
 
-  // const pullUpLoding = useSelector((state) =>
-  //   state.getIn(["singers", "pullUpLoading"])
-  // );
-
   const {
     singerList,
     pullUpLoading,
@@ -61,6 +38,33 @@ const Singer = () => {
     pullUpRefreshDispatch,
     pullDownRefreshDishpatch,
   } = useHotSingerList(hot, category, alpha);
+
+  const enterDetail = (detial) => {
+    props.history.push(`/singers/${detial.id}`);
+  };
+
+  const renderSingerList = (singerList) => {
+    return (
+      <List>
+        {singerList.map((item, index) => (
+          <ListItem
+            key={`${item.accountId}-${index}`}
+            onClick={() => enterDetail(item)}
+          >
+            <div className="img_wrapper">
+              <img
+                src={`${item.picUrl}?param=300x300`}
+                width="100%"
+                height="100%"
+                alt="music"
+              />
+            </div>
+            <span className="name">{item.name}</span>
+          </ListItem>
+        ))}
+      </List>
+    );
+  };
 
   return (
     <div>
@@ -90,6 +94,7 @@ const Singer = () => {
           {renderSingerList(singerList)}
         </Scroll>
       </ListContainer>
+      {renderRoutes(props.route.routes)}
     </div>
   );
 };
