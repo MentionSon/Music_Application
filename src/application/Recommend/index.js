@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "../../components/Slider";
 import RecommendList from "../../components/List";
 import Scroll from "../../baseUI/Scroll";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useRecommend } from "./store/model";
 import { forceCheck } from "react-lazyload";
 import Loading from "../../baseUI/Loading";
+import { renderRoutes } from "react-router-config";
 
 const Content = styled.div`
   position: fixed;
@@ -14,8 +15,12 @@ const Content = styled.div`
   width: 100%;
 `;
 
-const Recommend = () => {
+const Recommend = (props) => {
   const { bannerListJS, recommendListJS, enterLoading } = useRecommend();
+
+  useEffect(() => {
+    console.log(props.route.routes);
+  }, []);
 
   return (
     <Content>
@@ -29,6 +34,7 @@ const Recommend = () => {
           </div>
         </Scroll>
       )}
+      {renderRoutes(props.route.routes)}
     </Content>
   );
 };
