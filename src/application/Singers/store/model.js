@@ -14,9 +14,8 @@ import {
 export const useHotSingerList = (hot, { type, area }, inital) => {
   const dispatch = useDispatch();
 
-  const singerList = useSelector(
-    (state) => state.getIn(["singers", "singerList"]).toJS() || []
-  );
+  const singerList =
+    useSelector((state) => state.getIn(["singers", "singerList"])).toJS() || [];
 
   const pageCount = useSelector((state) =>
     state.getIn(["singers", "pageCount"])

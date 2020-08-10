@@ -7,6 +7,7 @@ import { getCount, getName, isEmptyObject } from "../../api/utils";
 import style from "../../assets/global-style";
 import { useAlbum } from "./store/model";
 import Loading from "../../baseUI/Loading";
+import { HEADER_HEIGHT } from "../../api/config";
 
 const Album = (props) => {
   const id = props.match.params.id;
@@ -20,8 +21,6 @@ const Album = (props) => {
   }, []);
 
   const HeaderEl = useRef(null);
-
-  const HEADER_HEIGHT = 45;
 
   const handleScroll = useCallback(
     (pos) => {
