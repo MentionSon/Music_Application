@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import MiniPlayer from "./miniPlayer";
 import NormalPlayer from "./normalPlayer";
+import { usePlayer } from "./store/model";
 
 const Player = (props) => {
   const currentSong = {
@@ -12,10 +13,12 @@ const Player = (props) => {
     ar: [{ name: "薛之谦" }],
   };
 
+  const { fullScreen, toggleFullScreen } = usePlayer();
+
   return (
     <div>
-      {/* <MiniPlayer song={currentSong}></MiniPlayer> */}
       <NormalPlayer song={currentSong}></NormalPlayer>
+      <MiniPlayer song={currentSong}></MiniPlayer>
     </div>
   );
 };

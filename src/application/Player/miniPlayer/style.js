@@ -3,10 +3,10 @@ import style from "../../../assets/global-style";
 
 const rotate = keyframes`
   0%{
-    transform: rotate (0);
+    transform: rotate(0);
   }
   100%{
-    transform: rotate (360deg);
+    transform: rotate(360deg);
   }
 `;
 
@@ -21,14 +21,14 @@ export const MiniPlayerContainer = styled.div`
   height: 60px;
   background: ${style["highlight-background-color"]};
   &.mini-enter {
-    transform: translate3d (0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
   }
   &.mini-enter-active {
-    transform: translate3d (0, 0, 0);
+    transform: translate3d(0, 0, 0);
     transition: all 0.4s;
   }
   &.mini-exit-active {
-    transform: translate3d (0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
     transition: all 0.4s;
   }
   .icon {
@@ -80,7 +80,7 @@ export const MiniPlayerContainer = styled.div`
     .icon-mini {
       font-size: 16px;
       position: absolute;
-      left: 8px;
+      left: 9px;
       top: 8px;
       &.icon-play {
         left: 9px;
