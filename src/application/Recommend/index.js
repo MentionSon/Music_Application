@@ -18,10 +18,6 @@ const Content = styled.div`
 const Recommend = (props) => {
   const { bannerListJS, recommendListJS, enterLoading } = useRecommend();
 
-  useEffect(() => {
-    console.log(props.route.routes);
-  }, []);
-
   return (
     <Content>
       {enterLoading ? (
