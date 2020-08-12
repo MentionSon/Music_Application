@@ -1,10 +1,5 @@
 import React, { useRef, useCallback, useState } from "react";
-import {
-  PlayListWrapper,
-  ScrollWrapper,
-  ListContent,
-  ListHeader,
-} from "./style";
+import { PlayListWrapper, ScrollWrapper, ListContent } from "./style";
 import { CSSTransition } from "react-transition-group";
 import Scroll from "../../../baseUI/Scroll";
 import { getName } from "../../../api/utils";
