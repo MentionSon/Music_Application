@@ -6,9 +6,12 @@ import { EnterLoading } from "../Singers/style";
 import Scroll from "../../baseUI/Scroll";
 import Loading from "../../baseUI/Loading";
 import { renderRoutes } from "react-router-config";
+import { usePlayer } from "../Player/store/model";
 
 const Rank = (props) => {
   const { rankList, loading } = useRank();
+
+  const { playCount } = usePlayer();
 
   const globalStartIndex = filterIndex(rankList);
 
@@ -59,7 +62,7 @@ const Rank = (props) => {
   const displayStyle = loading ? { display: "none" } : { display: "" };
 
   return (
-    <Container>
+    <Container playCount={playCount}>
       <Scroll>
         <div>
           <h1 className="official" style={displayStyle}>

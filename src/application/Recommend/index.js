@@ -7,19 +7,22 @@ import { useRecommend } from "./store/model";
 import { forceCheck } from "react-lazyload";
 import Loading from "../../baseUI/Loading";
 import { renderRoutes } from "react-router-config";
+import { usePlayer } from "../Player/store/model";
 
 const Content = styled.div`
   position: fixed;
   top: 90px;
-  bottom: 0;
+  bottom: ${(props) => (props.playCount > 0 ? "60px" : "0px")};
   width: 100%;
 `;
 
 const Recommend = (props) => {
   const { bannerListJS, recommendListJS, enterLoading } = useRecommend();
 
+  const { playCount } = usePlayer();
+
   return (
-    <Content>
+    <Content playCount={playCount}>
       {enterLoading ? (
         <Loading></Loading>
       ) : (

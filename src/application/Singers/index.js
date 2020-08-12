@@ -5,6 +5,7 @@ import { NavContainer, ListContainer, ListItem, List } from "./style";
 import Scroll from "../../baseUI/Scroll";
 import { useHotSingerList } from "./store/model";
 import { renderRoutes } from "react-router-config";
+import { usePlayer } from "../Player/store/model";
 
 const Singer = (props) => {
   const [hot, setHot] = useState("hotSingers");
@@ -13,6 +14,8 @@ const Singer = (props) => {
     area: "-1",
   });
   const [alpha, setAlpha] = useState("");
+
+  const { playCount } = usePlayer();
 
   const handleUpdateCategory = (val) => {
     if (hot) {
@@ -84,7 +87,7 @@ const Singer = (props) => {
           handleClick={(val) => handleUpdateAlpha(val)}
         ></Horizon>
       </NavContainer>
-      <ListContainer>
+      <ListContainer playCount={playCount}>
         <Scroll
           pullUpLoading={pullUpLoading}
           pullUp={pullUpRefreshDispatch}

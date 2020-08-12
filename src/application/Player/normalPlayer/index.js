@@ -23,6 +23,8 @@ const NormalPlayer = (props) => {
     percent,
     clickPlay,
     onProgressChange,
+    handlePrev,
+    handleNext,
   } = props;
 
   const { fullScreen, toggleFullScreen } = usePlayer();
@@ -132,14 +134,14 @@ const NormalPlayer = (props) => {
                 percentChange={onProgressChange}
               ></ProgressBar>
             </div>
-            <span className="time time-r">4:17</span>
+            <span className="time time-r">{formatPlayTime(duration)}</span>
           </ProgressWrapper>
           <Operators>
             <div className="icon i-left">
               <i className="fas fa-sync-alt" aria-hidden="true"></i>
             </div>
             <div className="icon i-left">
-              <i className="fas fa-step-backward"></i>
+              <i className="fas fa-step-backward" onClick={handlePrev}></i>
             </div>
             <div className="icon i-center">
               {playing ? (
@@ -155,10 +157,10 @@ const NormalPlayer = (props) => {
               )}
             </div>
             <div className="icon i-right">
-              <i className="fas fa-step-forward"></i>
+              <i className="fas fa-step-forward" onClick={handleNext}></i>
             </div>
             <div className="icon i-right">
-              <i className="fas fa-music"></i>
+              <i className="fa fa-music"></i>
             </div>
           </Operators>
         </Bottom>

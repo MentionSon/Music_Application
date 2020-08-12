@@ -8,6 +8,8 @@ import style from "../../assets/global-style";
 import { useAlbum } from "./store/model";
 import Loading from "../../baseUI/Loading";
 import { HEADER_HEIGHT } from "../../api/config";
+import MusicNote from "../../baseUI/MusicNote";
+import { usePlayer } from "../Player/store/model";
 
 const Album = (props) => {
   const id = props.match.params.id;
@@ -16,11 +18,28 @@ const Album = (props) => {
 
   const [showStatus, setShowStatus] = useState(true);
 
+  const {
+    playCount,
+    changeMusicPlayList,
+    changeCurrentPlayListIndex,
+  } = usePlayer();
+
   const handleBack = useCallback(() => {
     setShowStatus(false);
   }, []);
 
   const HeaderEl = useRef(null);
+
+  const musicNoteRef = useRef(null);
+
+  const selectItem = (e, index) => {
+    changeMusicPlayList(currentAlbum.tracks);
+    changeCurrentPlayListIndex(index);
+    musicNoteRef.current.startAnimation({
+      x: e.nativeEvent.clientX,
+      y: e.nativeEvent.clientY,
+    });
+  };
 
   const handleScroll = useCallback(
     (pos) => {
@@ -73,7 +92,12 @@ const Album = (props) => {
   const renderSongList = () => (
     <SongList showBackground>
       <div className="first_line">
-        <div className="play_all">
+        <div
+          className="play_all"
+          onClick={(e) => {
+            selectItem(e, 0);
+          }}
+        >
           <i className="fa fa-play-circle"></i>
           <span>
             {" "}
@@ -88,7 +112,12 @@ const Album = (props) => {
       </div>
       <SongItem>
         {currentAlbum.tracks.map((item, index) => (
-          <li key={index}>
+          <li
+            key={index}
+            onClick={(e) => {
+              selectItem(e, index);
+            }}
+          >
             <span className="index">{index + 1}</span>
             <div className="info">
               <span>{item.name}</span>
@@ -99,6 +128,7 @@ const Album = (props) => {
           </li>
         ))}
       </SongItem>
+      <MusicNote ref={musicNoteRef}></MusicNote>
     </SongList>
   );
 
@@ -111,7 +141,7 @@ const Album = (props) => {
       appear={true}
       onExited={props.history.goBack}
     >
-      <Container>
+      <Container playCount={playCount}>
         <Header title="返回" handleClick={handleBack} ref={HeaderEl}></Header>
         {enterLoading ? <Loading></Loading> : null}
         {!isEmptyObject(currentAlbum) ? (

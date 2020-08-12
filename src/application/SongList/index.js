@@ -1,14 +1,20 @@
 import React from "react";
 import { SongList, SongItem } from "./style";
 import { getName } from "../../api/utils";
+import { usePlayer } from "../Player/store/model";
 
 const SongsList = React.forwardRef((props, refs) => {
-  const { collectCount, showCollect, songs } = props;
+  const { collectCount, showCollect, songs, musicAnimation } = props;
+
+  const { changeMusicPlayList, changeCurrentPlayListIndex } = usePlayer();
 
   const totalCount = songs.length;
 
   const selectItem = (e, index) => {
-    console.log(index);
+    e.persist();
+    changeMusicPlayList(songs);
+    changeCurrentPlayListIndex(index);
+    musicAnimation(e.clientX, e.clientY);
   };
 
   const songList = (list) => {

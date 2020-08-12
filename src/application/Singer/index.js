@@ -14,6 +14,8 @@ import { HEADER_HEIGHT } from "../../api/config";
 import { useSinger } from "./store/model";
 import { useSelector } from "react-redux";
 import Loading from "../../baseUI/Loading";
+import MusicNote from "../../baseUI/MusicNote";
+import { usePlayer } from "../Player/store/model";
 
 const Singer = (props) => {
   const id = props.match.params.id;
@@ -22,12 +24,15 @@ const Singer = (props) => {
 
   const [showStatus, setShowStatus] = useState(true);
 
+  const { playCount } = usePlayer();
+
   const collectButton = useRef();
   const imageWrapper = useRef();
   const songScrollWrapper = useRef();
   const songScroll = useRef();
   const header = useRef();
   const layer = useRef();
+  const musicNoteRef = useRef();
 
   const initialHeight = useRef(0);
 
@@ -79,6 +84,10 @@ const Singer = (props) => {
     }
   }, []);
 
+  const musicAnimation = (x, y) => {
+    musicNoteRef.current.startAnimation({ x, y });
+  };
+
   useEffect(() => {
     initStyle();
   }, []);
@@ -92,7 +101,7 @@ const Singer = (props) => {
       unmountOnExit
       onExited={() => props.history.goBack()}
     >
-      <Container>
+      <Container playCount={playCount}>
         {enterLoading ? <Loading></Loading> : null}
         <Header
           title={"head"}
@@ -109,9 +118,14 @@ const Singer = (props) => {
         <BgLayer ref={layer}></BgLayer>
         <SongListWrapper ref={songScrollWrapper}>
           <Scroll ref={songScroll} onScroll={handleScroll}>
-            <SongsList songs={songsOfArtist} showCollect={false}></SongsList>
+            <SongsList
+              songs={songsOfArtist}
+              showCollect={false}
+              musicAnimation={musicAnimation}
+            ></SongsList>
           </Scroll>
         </SongListWrapper>
+        <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
     </CSSTransition>
   );
