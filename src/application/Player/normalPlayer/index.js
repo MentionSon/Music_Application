@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { getName } from "../../../api/utils";
+import React, { useRef } from "react";
+import { getName, formatPlayTime } from "../../../api/utils";
 import {
   NormalPlayerContainer,
   Top,
@@ -7,13 +7,23 @@ import {
   Bottom,
   Operators,
   CDWrapper,
+  ProgressWrapper,
 } from "./style";
 import { usePlayer } from "../store/model";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
+import ProgressBar from "../../../baseUI/ProgressBar";
 
 const NormalPlayer = (props) => {
-  const { song } = props;
+  const {
+    playing,
+    song,
+    currentTime,
+    duration,
+    percent,
+    clickPlay,
+    onProgressChange,
+  } = props;
 
   const { fullScreen, toggleFullScreen } = usePlayer();
 
@@ -106,7 +116,7 @@ const NormalPlayer = (props) => {
           <CDWrapper>
             <div className="cd">
               <img
-                className="image play"
+                className={`image play ${playing ? "" : "pause"}`}
                 src={song.al.picUrl + "?param=400x400"}
                 alt=""
               />
@@ -114,18 +124,38 @@ const NormalPlayer = (props) => {
           </CDWrapper>
         </Middle>
         <Bottom className="bottom">
+          <ProgressWrapper>
+            <span className="time time-l">{formatPlayTime(currentTime)}</span>
+            <div className="progress-bar-wrapper">
+              <ProgressBar
+                percent={percent}
+                percentChange={onProgressChange}
+              ></ProgressBar>
+            </div>
+            <span className="time time-r">4:17</span>
+          </ProgressWrapper>
           <Operators>
             <div className="icon i-left">
               <i className="fas fa-sync-alt" aria-hidden="true"></i>
             </div>
             <div className="icon i-left">
-              <i className="fas fa-step-forward"></i>
+              <i className="fas fa-step-backward"></i>
             </div>
             <div className="icon i-center">
-              <i className="fas fa-play-circle"></i>
+              {playing ? (
+                <i
+                  className="fas fa-pause-circle"
+                  onClick={(e) => clickPlay(e, false)}
+                ></i>
+              ) : (
+                <i
+                  className="fas fa-play-circle"
+                  onClick={(e) => clickPlay(e, true)}
+                ></i>
+              )}
             </div>
             <div className="icon i-right">
-              <i className="fas fa-step-backward"></i>
+              <i className="fas fa-step-forward"></i>
             </div>
             <div className="icon i-right">
               <i className="fas fa-music"></i>

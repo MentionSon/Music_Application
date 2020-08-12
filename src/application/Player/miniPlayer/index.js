@@ -6,7 +6,7 @@ import { usePlayer } from "../store/model";
 import ProgressCircle from "../../../baseUI/ProgressCircle";
 
 const MiniPlayer = (props) => {
-  const { song } = props;
+  const { playing, song, percent, clickPlay } = props;
 
   const { fullScreen, toggleFullScreen } = usePlayer();
 
@@ -46,8 +46,20 @@ const MiniPlayer = (props) => {
           <p className="desc">{getName(song.ar)}</p>
         </div>
         <div className="control">
-          <ProgressCircle radius={32} percent={0.2}>
-            <i className="fa fa-pause icon-mini"></i>
+          <ProgressCircle radius={32} percent={percent}>
+            {playing ? (
+              <i
+                className="fa fa-pause icon-mini"
+                style={{ left: "9px" }}
+                onClick={(e) => clickPlay(e, false)}
+              ></i>
+            ) : (
+              <i
+                className="fa fa-play icon-mini"
+                style={{ left: "11px" }}
+                onClick={(e) => clickPlay(e, true)}
+              ></i>
+            )}
           </ProgressCircle>
         </div>
         <div className="control">
