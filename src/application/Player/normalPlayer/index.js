@@ -27,7 +27,7 @@ const NormalPlayer = (props) => {
     handleNext,
   } = props;
 
-  const { fullScreen, toggleFullScreen } = usePlayer();
+  const { fullScreen, toggleFullScreen, toggleShowPlayList } = usePlayer();
 
   const normalPlayerRef = useRef();
   const cdWrapperRef = useRef();
@@ -159,7 +159,12 @@ const NormalPlayer = (props) => {
             <div className="icon i-right">
               <i className="fas fa-step-forward" onClick={handleNext}></i>
             </div>
-            <div className="icon i-right">
+            <div
+              className="icon i-right"
+              onClick={() => {
+                toggleShowPlayList(true);
+              }}
+            >
               <i className="fa fa-music"></i>
             </div>
           </Operators>

@@ -12,7 +12,6 @@ import Scroll from "../../baseUI/Scroll";
 import SongsList from "../../application/SongList";
 import { HEADER_HEIGHT } from "../../api/config";
 import { useSinger } from "./store/model";
-import { useSelector } from "react-redux";
 import Loading from "../../baseUI/Loading";
 import MusicNote from "../../baseUI/MusicNote";
 import { usePlayer } from "../Player/store/model";

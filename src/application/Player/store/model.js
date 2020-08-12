@@ -7,8 +7,8 @@ import {
   changeCurrentSong,
   changePlayMode,
   changePlayList,
+  changeShowPlayList,
 } from "./actionCreator";
-import styled from "styled-components";
 
 export const usePlayer = () => {
   const dispatch = useDispatch();
@@ -39,6 +39,10 @@ export const usePlayer = () => {
   const playCount = useSelector((state) => state.getIn(["player", "playList"]))
     .size;
 
+  const showPlayList = useSelector((state) =>
+    state.getIn(["player", "showPlayList"])
+  );
+
   const toggleFullScreen = useCallback((data) => {
     dispatch(changeFullScreen(data));
   }, []);
@@ -67,6 +71,10 @@ export const usePlayer = () => {
     dispatch(changePlayList(data));
   }, []);
 
+  const toggleShowPlayList = useCallback((data) => {
+    dispatch(changeShowPlayList(data));
+  }, []);
+
   return {
     fullScreen,
     playing,
@@ -76,6 +84,7 @@ export const usePlayer = () => {
     playList,
     sequencePlayList,
     playCount,
+    showPlayList,
     toggleFullScreen,
     togglePlaying,
     changeCurrentPlayIndex,
@@ -83,5 +92,6 @@ export const usePlayer = () => {
     changeCurrentPlayListIndex,
     changeMode,
     changeMusicPlayList,
+    toggleShowPlayList,
   };
 };

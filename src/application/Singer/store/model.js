@@ -1,7 +1,7 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingerInfoRequest } from "../../../api/request";
-import { changeArtist, changeSongs, changeEnterLoading } from "./actionCreator";
+import { changeSongs, changeEnterLoading } from "./actionCreator";
 import { CHANGE_ARTIST } from "./constant";
 import { fromJS } from "immutable";
 

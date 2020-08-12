@@ -1,17 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import MiniPlayer from "./miniPlayer";
 import NormalPlayer from "./normalPlayer";
+import PlayList from "./playList";
 import { usePlayer } from "./store/model";
 import { isEmptyObject, getSongUrl } from "../../api/utils";
 
 const Player = (props) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [currentPlayingLyric, setCurrentPlayingLyric] = useState("");
-  const [modeText, setModeText] = useState("");
   const [presetSong, setPresetSong] = useState({});
 
   const audioRef = useRef();
+  const songReady = useRef(true);
 
   let percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
@@ -30,18 +30,22 @@ const Player = (props) => {
       !playList.length ||
       currentIndex === -1 ||
       !playList[currentIndex] ||
-      playList[currentIndex].id === presetSong.id
+      playList[currentIndex].id === presetSong.id ||
+      !songReady.current
     ) {
       return;
     }
     let current = playList[currentIndex];
     changeCurrentSongData(current);
     setPresetSong(current);
+    songReady.current = false;
     audioRef.current.src = await getSongUrl(current.id);
     audioRef.current.autoplay = true;
-    // setTimeout(() => {
-    audioRef.current.play();
-    // }, 100);
+    setTimeout(() => {
+      audioRef.current.play().then(() => {
+        songReady.current = true;
+      });
+    });
     togglePlaying(true);
     setCurrentTime(0);
     setDuration((current.dt / 1000) | 0);
@@ -136,6 +140,7 @@ const Player = (props) => {
         ></MiniPlayer>
       ) : null}
       <audio ref={audioRef} onTimeUpdate={updateTime}></audio>
+      <PlayList></PlayList>
     </div>
   );
 };
