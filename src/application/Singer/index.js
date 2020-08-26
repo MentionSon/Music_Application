@@ -102,11 +102,7 @@ const Singer = (props) => {
     >
       <Container playCount={playCount}>
         {enterLoading ? <Loading></Loading> : null}
-        <Header
-          title={"head"}
-          ref={header}
-          handleClick={() => setShowStatus(false)}
-        ></Header>
+        <Header ref={header} handleClick={() => setShowStatus(false)}></Header>
         <ImgWrapper bgUrl={artist.picUrl} ref={imageWrapper}>
           <div className="filter"></div>
         </ImgWrapper>

@@ -30,7 +30,10 @@ function Home(props) {
         </span>
         <span className="title"></span>
         <span>
-          <i className="fa fa-search"></i>
+          <i
+            className="fa fa-search"
+            onClick={() => props.history.push("/search")}
+          ></i>
         </span>
       </Top>
       <Tab>

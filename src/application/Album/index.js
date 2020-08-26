@@ -142,7 +142,7 @@ const Album = (props) => {
       onExited={props.history.goBack}
     >
       <Container playCount={playCount}>
-        <Header title="返回" handleClick={handleBack} ref={HeaderEl}></Header>
+        <Header handleClick={handleBack} ref={HeaderEl}></Header>
         {enterLoading ? <Loading></Loading> : null}
         {!isEmptyObject(currentAlbum) ? (
           <Scroll bounceTop={false} onScroll={handleScroll}>
